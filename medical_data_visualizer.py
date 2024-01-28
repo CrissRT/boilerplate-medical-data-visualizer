@@ -7,11 +7,10 @@ import numpy as np
 df = pd.read_csv("medical_examination.csv")
 
 # Add 'overweight' column
-df['overweight'] = df["weight"] / (df["height"] ** 2)
+df['overweight'] = df["weight"] / (df["height"]/ 100) ** 2
 
 condition = df['overweight'] > 25
-df['overweight'] = np.where(condition, 0, 1)
-print(df['overweight'].head())
+df['overweight'] = np.where(condition, 1, 0)
 
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
@@ -21,6 +20,7 @@ df['cholesterol'] = np.where(condition, 1, 0)
 condition = df['gluc'] > 1
 df['gluc'] = np.where(condition, 1, 0)
 
+print(df.head(15))
 
 # Draw Categorical Plot
 def draw_cat_plot():
@@ -66,5 +66,5 @@ def draw_heat_map():
 
 
     # Do not modify the next two lines
-    fig.savefig('heatmap.png')
+    # fig.savefig('heatmap.png')
     return fig
