@@ -4,12 +4,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import data
-df = None
+df = pd.read_csv("medical_examination.csv")
 
 # Add 'overweight' column
-df['overweight'] = None
+df['overweight'] = df["weight"] / (df["height"] ** 2)
+
+condition = df['overweight'] > 25
+df['overweight'] = np.where(condition, 0, 1)
+print(df['overweight'].head())
+
 
 # Normalize data by making 0 always good and 1 always bad. If the value of 'cholesterol' or 'gluc' is 1, make the value 0. If the value is more than 1, make the value 1.
+condition = df['cholesterol'] > 1
+df['cholesterol'] = np.where(condition, 1, 0)
+
+condition = df['gluc'] > 1
+df['gluc'] = np.where(condition, 1, 0)
 
 
 # Draw Categorical Plot
